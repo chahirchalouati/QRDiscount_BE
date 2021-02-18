@@ -11,11 +11,6 @@ package QRDiscount.Exceptions.EntityExceptions;
  */
 public class EntityNotFoundException extends RuntimeException {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-
     public EntityNotFoundException() {
     }
 
@@ -31,7 +26,8 @@ public class EntityNotFoundException extends RuntimeException {
         super(cause);
     }
 
-    public EntityNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public EntityNotFoundException(String message, Throwable cause,
+            boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

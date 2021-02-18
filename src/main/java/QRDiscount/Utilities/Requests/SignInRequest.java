@@ -5,6 +5,7 @@
  */
 package QRDiscount.Utilities.Requests;
 
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SignInRequest {
 
+    @NotBlank(message = "E-mail can't be blank")
     private String email;
+    @NotBlank(message = "Password can't be blank")
     private String password;
 
 }

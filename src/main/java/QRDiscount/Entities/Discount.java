@@ -16,12 +16,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -52,9 +55,6 @@ public class Discount implements Serializable {
     @NotBlank(message = " URL discount can't be blank")
     private String urlDiscount;
 
-    @NotBlank(message = " Path discount can't be blank")
-    private String pathDiscount;
-
     @FutureOrPresent(message = "date must be equal to present date or future date ")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
@@ -74,4 +74,13 @@ public class Discount implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.NUMBER)
     private Date modifiedAt;
+
+    @Transient
+    @Getter(AccessLevel.NONE)
+    private boolean isValid;
+
+    public boolean isIsValid() {
+        return new Date().before(this.validityTo);
+    }
+
 }
