@@ -43,7 +43,7 @@ public class JwtUtils {
                 .setIssuer("www.QRDiscount.com")
                 .setSubject(user.getEmail().trim().toLowerCase())
                 .claim("fullname", user.getFullname())
-                .claim("email", user.getEmail().trim().toLowerCase())
+                .claim("email", user.getEmail())
                 .claim("isNew", user.isNew())
                 .claim("roles", user.getRoles().stream().map(role -> role.getRole()).collect(Collectors.toList()))
                 .setIssuedAt(new Date())
@@ -58,8 +58,6 @@ public class JwtUtils {
     }
 
     public boolean validateJwtToken(String authToken, HttpServletRequest httpServletRequest) {
-
-        System.out.println(authToken);
         try {
             Jwts.parser().setSigningKey(SECRET).parseClaimsJws(authToken);
             return true;

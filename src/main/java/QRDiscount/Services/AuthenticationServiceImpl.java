@@ -64,7 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         AppUser user = new AppUser();
         user.setFullname(request.getFullname().trim());
         user.setUsername(request.getUsername().trim());
-        user.setEmail(request.getEmail().trim().toLowerCase());
+        user.setEmail(request.getEmail().trim());
         user.setPassword(encoder.encode(request.getPassword()));
         user.setCreatedAt(new Date());
         user.setModifiedAt(new Date());
@@ -77,7 +77,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public ResponseEntity<?> signIn(SignInRequest request) {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                request.getEmail().trim().toLowerCase(), request.getPassword());
+                request.getEmail(), request.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 

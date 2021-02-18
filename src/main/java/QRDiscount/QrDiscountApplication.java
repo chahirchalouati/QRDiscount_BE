@@ -4,6 +4,8 @@ import QRDiscount.Entities.AppRole;
 import QRDiscount.Repositories.RoleRepository;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,12 +28,13 @@ public class QrDiscountApplication {
     @Bean
     CommandLineRunner commandLineRunner(RoleRepository roleRepository) {
         return (String[] args) -> {
-            try {
+            try {                
                 if (roleRepository.findAll().size() <= 0) {
-                    Arrays.asList(roles)
+                    List<AppRole> collectRoles = Arrays.asList(roles)
                             .stream()
-                            .map(r -> roleRepository.save(new AppRole(null, r, new Date())));
-
+                            .map(r -> new AppRole(null, r, new Date()))
+                            .collect(Collectors.toList());
+                    roleRepository.saveAll(collectRoles);
                 }
 
             } catch (Exception e) {

@@ -27,9 +27,6 @@ public class FileRestController {
 
     @GetMapping("/{filename}")
     public ResponseEntity<?> get(@PathVariable(name = "filename") String filename, HttpServletRequest request) {
-
-        System.out.println(" \n\n\n\n New File Send \n\n\n\n");
-
         return fileService.getFile(filename, request);
     }
 

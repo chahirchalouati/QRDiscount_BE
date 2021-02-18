@@ -35,7 +35,6 @@ public class ShopService {
     private final UserRepository userRepository;
     private final FileService fileService;
     private final RoleRepository roleRepository;
-    private final String downloadFileEndPoint = "/files/";
 
     /**
      * create Shop
@@ -48,42 +47,6 @@ public class ShopService {
     @Transactional
     public ResponseEntity<?> createShop(ShopPro shopPro, Principal principal) throws IOException {
 
-//        List<Shop> shops = new ArrayList<>();
-//
-//        for (int i = 0; i < 100; i++) {
-//            Faker faker = new Faker();
-//
-//            AppRole findByRole = roleRepository.findByRole("NEGOZIANTE");
-//            AppUser user = new AppUser(null,
-//                    faker.name().fullName(),
-//                    faker.name().username(),
-//                    faker.name().username().concat("@").concat("mail.com"),
-//                    "Password23?", List.of(findByRole), true, true, true, true, true, new Date(), new Date());
-//
-//            AppUser save = userRepository.save(user);
-//
-//            Shop s = new Shop();
-//            s.setId(null);
-//
-//            s.setAddress(
-//                    new Address(null,
-//                            faker.address().city(),
-//                            faker.address().state(),
-//                            faker.address().country(),
-//                            faker.address().zipCode(),
-//                            faker.address().streetName(),
-//                            new Date(), new Date()));
-//            String url = downloadFileEndPoint.concat(fileService.storeFiles(shopPro.getFile()).getName());
-//            s.setLogoUrl(url);
-//            s.setName(faker.name().name());
-//            s.setUser(save);
-//            s.setModifiedAt(new Date());
-//            s.setCreatedAt(new Date());
-//            shops.add(s);
-//
-//        }
-//        List<Shop> saveAll = shopRepository.saveAll(shops);
-//        return new ResponseEntity<>(saveAll, HttpStatus.CREATED);
         AppUser user = userRepository.findByEmailOrUsername(principal.getName(), principal.getName());
 
         user.getRoles().add(roleRepository.findByRole("NEGOZIANTE"));// he adding more than one role to user to fix later
@@ -103,6 +66,7 @@ public class ShopService {
         shop.setCreatedAt(new Date());
         Shop save = shopRepository.save(shop);
         return new ResponseEntity<>(save, HttpStatus.CREATED);
+
     }
 
     /**
